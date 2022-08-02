@@ -1,8 +1,5 @@
-import {Request, Response} from 'express';
-import { type } from 'os';
-import { IPaymentMethodFindAll } from '../../models/repository_models/IPaymentMethodRepositoryModel';
-import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
-import { IPaymentMethodResourceModel } from '../../models/resource_models/IPaymentMethodResourceModel';
+import { Request, Response } from 'express';
+import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
 import { EspayRepository } from '../../repositories/EspayRepository';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';
 import { BaseResource } from '../resources/BaseResource';
@@ -44,6 +41,7 @@ const index = async (req: Request, res: Response) => {
 
   for (let i in paymentList) {
     if (esapayPaymentAvailable.find(item => item.bankCode === paymentList[i].bank_code)){
+      paymentList[i].logo = `${cloudinaryBaseUrl}/${paymentList[i].logo}`
       if (paymentList[i].type == 'va'){
         result.va.push(paymentList[i])
       }
