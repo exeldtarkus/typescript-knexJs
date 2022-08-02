@@ -1,12 +1,15 @@
 import {IRepository} from "./IRepository";
 import axios from 'axios';
 import qs from 'qs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class EspayRepository implements IRepository {
   static findMerchantInfo(apiKey: string) { 
     let config = {
       method: 'POST',
-      url: 'https://sandbox-api.espay.id/rest/merchant/merchantinfo',
+      url: `${process.env.ESPAY_API}/rest/merchant/merchantinfo`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
