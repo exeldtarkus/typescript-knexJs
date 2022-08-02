@@ -8,8 +8,11 @@ export async function up(knex: Knex): Promise<void> {
             id          int auto_increment
                 primary key,
             uuid        varchar(50),
-            name        varchar(100)         null,
-            code        varchar(100)         null,
+            bank_name   varchar(100)         null,
+            bank_code   varchar(100)         null,
+            logo        varchar(100)         null,
+            type        varchar(100)         null,
+            admin_fe    int(11)              null,
             description text                 null,
             created_at  timestamp            null,
             updated_at  timestamp            null,
