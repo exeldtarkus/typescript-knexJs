@@ -12,7 +12,7 @@ export async function up(knex: Knex): Promise<void> {
             bank_code   varchar(100)         null,
             logo        varchar(100)         null,
             type        varchar(100)         null,
-            admin_fe    int(11)              null,
+            admin_fee   decimal(15,2)        null,
             description text                 null,
             created_at  timestamp            null,
             updated_at  timestamp            null,
@@ -24,6 +24,6 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
     await knex.raw(`
-        drop table mst_payment_method;
+      DROP TABLE mst_payment_method;;
 `   );
 }

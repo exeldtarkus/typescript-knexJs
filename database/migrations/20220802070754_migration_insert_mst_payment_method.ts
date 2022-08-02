@@ -7,8 +7,8 @@ const dateNow = moment().format("YYYY-MM-DD HH:mm:ss");
 
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
-    INSERT  INTO mst_payment_method(uuid, bank_name, bank_code, logo, type, admin_fe, description, created_at, updated_at, active) 
-    vaLUES  ('${uuidv4()}','Danamon Virtual Account','011','/bank/ico.Danamon.png','va',6000,NULL,'${dateNow}',NULL,1),
+    INSERT  INTO mst_payment_method(uuid, bank_name, bank_code, logo, type, admin_fee, description, created_at, updated_at, active) 
+    VALUES  ('${uuidv4()}','Danamon Virtual Account','011','/bank/ico.Danamon.png','va',6000,NULL,'${dateNow}',NULL,1),
             ('${uuidv4()}','BRI Virtual Account','002','/bank/ico.BRI.png','va',6000,NULL,'${dateNow}',NULL,1),
             ('${uuidv4()}','BNI Virtual Account','009','/bank/ico.BNI.png','va',6000,NULL,'${dateNow}',NULL,1),
             ('${uuidv4()}','BCA Virtual Account','014','/bank/ico.BCA.png','va',6000,NULL,'${dateNow}',NULL,1),
