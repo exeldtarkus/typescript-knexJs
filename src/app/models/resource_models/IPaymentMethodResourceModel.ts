@@ -1,16 +1,22 @@
 interface IPaymentMethodResourceModel {
-  uuid: string,
+  id: string,
   bank_name: string,
   bank_code: string,
   logo: string,
   type: string,
-  admin_fe: number,
+  admin_fee: number,
   description: string,
   created_at: string,
   updated_at: string,
   active: number
 }
 
+type typeOfPayment = {
+  va: Array<any>;
+  wallet: Array<any>;
+}
+
 export {
-  IPaymentMethodResourceModel
+  IPaymentMethodResourceModel,
+  typeOfPayment
 }
