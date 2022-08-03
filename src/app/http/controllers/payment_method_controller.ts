@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
 import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
-import { IDataMerchantInfo, IMerchantInfoEspayResourceModel } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
+import { IMerchantInfoEspayResourceModel } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
 import { IPaymentMethodResourceModel, ITypeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
 import { EspayServices } from '../../services/EspayServices';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';

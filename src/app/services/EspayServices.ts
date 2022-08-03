@@ -3,7 +3,6 @@ import axios from 'axios';
 import qs from 'qs';
 import dotenv from 'dotenv';
 import { IMerchantInfoEspayResourceModel } from "../models/resource_models/IMerchantInfoEspayResourceModel";
-import { BaseResource } from "../http/resources/BaseResource";
 
 dotenv.config();
 
