@@ -11,12 +11,12 @@ interface IPaymentMethodResourceModel {
   active: number
 }
 
-interface typeOfPayment {
+interface ITypeOfPayment {
   va: Array<IPaymentMethodResourceModel>;
   wallet: Array<IPaymentMethodResourceModel>;
 }
 
 export {
   IPaymentMethodResourceModel,
-  typeOfPayment
+  ITypeOfPayment
 }

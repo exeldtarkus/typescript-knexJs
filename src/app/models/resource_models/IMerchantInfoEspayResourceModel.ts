@@ -1,5 +1,5 @@
 
-interface dataMerchantInfo {
+interface IDataMerchantInfo {
   bankCode: string,
   productCode: string,
   productName: string
@@ -8,10 +8,10 @@ interface dataMerchantInfo {
 interface IMerchantInfoEspayResourceModel {
   error_code: string,
   error_message: string,
-  data: Array<dataMerchantInfo>
+  data: Array<IDataMerchantInfo>
 }
 
 export {
   IMerchantInfoEspayResourceModel,
-  dataMerchantInfo
+  IDataMerchantInfo
 }

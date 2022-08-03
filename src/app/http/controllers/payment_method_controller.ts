@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
 import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
-import { dataMerchantInfo } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
-import { IPaymentMethodResourceModel, typeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
+import { IDataMerchantInfo } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
+import { IPaymentMethodResourceModel, ITypeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
 import { EspayRepository } from '../../repositories/EspayRepository';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';
 import { BaseResource } from '../resources/BaseResource';
@@ -10,7 +10,7 @@ import { PaymentMethodResource } from '../resources/paymentMethodResource';
 
 const index = async (req: Request, res: Response) => {
 
-  const result: typeOfPayment = {
+  const result: ITypeOfPayment = {
     va: [],
     wallet: []
   }
@@ -29,7 +29,7 @@ const index = async (req: Request, res: Response) => {
       status: 500,
     }));
   }
-  const esapayPaymentAvailable: Array<dataMerchantInfo> = espayPaymentList.data.data
+  const esapayPaymentAvailable: Array<IDataMerchantInfo> = espayPaymentList.data.data
   const dataPaymentTransform: Array<IPaymentMethodResourceModel> = PaymentMethodResource.transformer(paymentList)
   
   for (let i in dataPaymentTransform) {

@@ -1,10 +1,10 @@
 import {IBaseResourceModel} from '../../models/resource_models/IBaseResourceModel'
 import moment from "moment";
 import {BaseResource} from "./BaseResource";
-import { IPaymentMethodResourceModel, typeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
+import { IPaymentMethodResourceModel, ITypeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
 
 interface ExecInput extends IBaseResourceModel {
-    data: Array<typeOfPayment>
+    data: Array<ITypeOfPayment>
 }
 
 class PaymentMethodResource extends BaseResource {
