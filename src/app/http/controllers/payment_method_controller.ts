@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
 import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
-import { IDataMerchantInfo } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
+import { IDataMerchantInfo, IMerchantInfoEspayResourceModel } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
 import { IPaymentMethodResourceModel, ITypeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
 import { EspayRepository } from '../../repositories/EspayRepository';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';
@@ -21,7 +21,10 @@ const index = async (req: Request, res: Response) => {
   const paymentList = await PaymentMethodRepository.findAllPaymentList();
   const espayPaymentList = await EspayRepository.findMerchantInfo(apiKey);
 
-  if (espayPaymentList.data.error_code != '0000' || !espayPaymentList) {
+  const dataPaymentTransform: Array<IPaymentMethodResourceModel> = PaymentMethodResource.transformer(paymentList)
+  const esapayPaymentAvailable: IMerchantInfoEspayResourceModel = espayPaymentList.data
+
+  if (esapayPaymentAvailable.error_code != '0000' || !esapayPaymentAvailable) {
     res.status(500).json(BaseResource.exec({
       data: null,
       isSuccess: false,
@@ -29,11 +32,9 @@ const index = async (req: Request, res: Response) => {
       status: 500,
     }));
   }
-  const esapayPaymentAvailable: Array<IDataMerchantInfo> = espayPaymentList.data.data
-  const dataPaymentTransform: Array<IPaymentMethodResourceModel> = PaymentMethodResource.transformer(paymentList)
-  
+
   for (let i in dataPaymentTransform) {
-    if (esapayPaymentAvailable.find(item => item.bankCode === dataPaymentTransform[i].bank_code)){
+    if (esapayPaymentAvailable.data.find(item => item.bankCode === dataPaymentTransform[i].bank_code)){
       dataPaymentTransform[i].logo = `${cloudinaryBaseUrl}/${dataPaymentTransform[i].logo}`
       if (dataPaymentTransform[i].type == 'va'){
         result.va.push(dataPaymentTransform[i])
