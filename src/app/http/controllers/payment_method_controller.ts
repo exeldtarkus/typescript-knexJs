@@ -3,10 +3,11 @@ import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
 import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
 import { IDataMerchantInfo, IMerchantInfoEspayResourceModel } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
 import { IPaymentMethodResourceModel, ITypeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
-import { EspayRepository } from '../../repositories/EspayRepository';
+import { EspayServices } from '../../services/EspayServices';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';
 import { BaseResource } from '../resources/BaseResource';
 import { PaymentMethodResource } from '../resources/paymentMethodResource';
+import { IPaymentMethodFindAllOutput } from '../../models/repository_models/IPaymentMethodRepositoryModel';
 
 const index = async (req: Request, res: Response) => {
 
@@ -18,23 +19,22 @@ const index = async (req: Request, res: Response) => {
   const { bengkelId } = req.params
   let apiKey: string = '776b8c15b1ab864e1b96bb61d6bb56d0'
 
-  const paymentList = await PaymentMethodRepository.findAllPaymentList();
-  const espayPaymentList = await EspayRepository.findMerchantInfo(apiKey);
-
-  const dataPaymentTransform: Array<IPaymentMethodResourceModel> = PaymentMethodResource.transformer(paymentList)
-  const esapayPaymentAvailable: IMerchantInfoEspayResourceModel = espayPaymentList.data
-
-  if (esapayPaymentAvailable.error_code != '0000' || !esapayPaymentAvailable) {
+  const paymentList: Array<IPaymentMethodFindAllOutput> = await PaymentMethodRepository.findAllPaymentList();
+  const espayPaymentList: IMerchantInfoEspayResourceModel | null = await EspayServices.findMerchantInfo(apiKey);
+  
+  if (!espayPaymentList || espayPaymentList.error_code != '0000') {
     res.status(500).json(BaseResource.exec({
       data: null,
       isSuccess: false,
-      message: `Error - ${espayPaymentList.data.error_message}`,
+      message: espayPaymentList ? `Error - ${espayPaymentList.error_message}` : 'Error - Failed Connected to Espay Service',
       status: 500,
     }));
   }
 
+  const dataPaymentTransform: Array<IPaymentMethodResourceModel> = PaymentMethodResource.transformer(paymentList)
+
   for (let i in dataPaymentTransform) {
-    if (esapayPaymentAvailable.data.find(item => item.bankCode === dataPaymentTransform[i].bank_code)){
+    if (espayPaymentList?.data.find(item => item.bankCode === dataPaymentTransform[i].bank_code)){
       dataPaymentTransform[i].logo = `${cloudinaryBaseUrl}/${dataPaymentTransform[i].logo}`
       if (dataPaymentTransform[i].type == 'va'){
         result.va.push(dataPaymentTransform[i])
