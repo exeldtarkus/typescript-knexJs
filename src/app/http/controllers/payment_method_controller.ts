@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { cloudinaryBaseUrl } from '../../config/cloudinary_config';
-import { IPaymentMethodFindAllOutput } from '../../models/repository_models/IPaymentMethodRepositoryModel';
-import { dataMerchantInfo, IMerchantInfoEspayResourceModel } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
+import { IBaseResourceModel } from '../../models/resource_models/IBaseResourceModel';
+import { dataMerchantInfo } from '../../models/resource_models/IMerchantInfoEspayResourceModel';
 import { IPaymentMethodResourceModel, typeOfPayment } from '../../models/resource_models/IPaymentMethodResourceModel';
 import { EspayRepository } from '../../repositories/EspayRepository';
 import { PaymentMethodRepository } from '../../repositories/PaymentMethodRepository';
@@ -43,12 +43,14 @@ const index = async (req: Request, res: Response) => {
       }
     }
   }
-  res.json(BaseResource.exec({
+
+  const response: IBaseResourceModel = {
     data: result,
     isSuccess: true,
     message: "200 OK",
     status: 200,
-  }));
+  }
+  res.json(PaymentMethodResource.exec(response));
 }
 
 export {

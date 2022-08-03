@@ -11,9 +11,9 @@ interface IPaymentMethodResourceModel {
   active: number
 }
 
-type typeOfPayment = {
-  va: Array<any>;
-  wallet: Array<any>;
+interface typeOfPayment {
+  va: Array<IPaymentMethodResourceModel>;
+  wallet: Array<IPaymentMethodResourceModel>;
 }
 
 export {
