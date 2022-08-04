@@ -6,6 +6,7 @@ const paymentDBConnection = knex({
     connection: {
         user: paymentDB.username,
         host: paymentDB.host,
+        port: 3309,
         database: paymentDB.db,
         password: paymentDB.password,
     }

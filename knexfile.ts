@@ -8,6 +8,7 @@ const config: { [key: string]: Knex.Config } = {
     client: 'mysql2',
     connection: {
       user: paymentDB.username,
+      port: 3309,
       host: paymentDB.host,
       database: paymentDB.db,
       password: paymentDB.password,
