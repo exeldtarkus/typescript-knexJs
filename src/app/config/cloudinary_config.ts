@@ -21,7 +21,7 @@ cloudinary.config({
 // const cloudinaryBaseUrl = `https://res.cloudinary.com/adiramoservice/q_auto,f_auto/v1/${cloudinaryConfig.cloudinary_path}`
 
 const cloudinaryBaseUrl = (setting: string): string => {
-  let settings: Array<any> = ['q_auto','f_auto']
+  let settings: Array<string> = ['q_auto','f_auto']
 
   if (setting) {
     settings.push(setting)
