@@ -1,6 +1,11 @@
 import {IRepositoryParam} from "../../repositories/IRepository";
 
-interface IPaymentMethodFindAll extends IRepositoryParam {}
+interface IPaymentMethodFindAll extends IRepositoryParam {
+  q?: {
+      id?: number,
+      uuid?: string
+  }
+}
 
 interface IPaymentMethodFindAllOutput {
   id?: number,

@@ -8,25 +8,33 @@ import { PaymentMethodRepository } from '../../repositories/PaymentMethodReposit
 import { BaseResource } from '../resources/BaseResource';
 import { PaymentMethodResource } from '../resources/paymentMethodResource';
 import { IPaymentMethodFindAllOutput } from '../../models/repository_models/IPaymentMethodRepositoryModel';
+import { IMerchantConfigurationsFindAll, IMerchantConfigurationsFindAllOutput } from '../../models/repository_models/MerchantConfigurationsRepositoryModel';
+import { MerchantConfigurationsRepository } from '../../repositories/MerchantConfigurationsRepository';
 
 const index = async (req: Request, res: Response) => {
+
+  const paramsMerchantConfig: IMerchantConfigurationsFindAll = {
+    q: {
+      bengkelId: +req.params.bengkelId
+    }
+  }
+
+  let apiKey: string = '776b8c15b1ab864e1b96bb61d6bb56d0'
 
   const result: ITypeOfPayment = {
     va: [],
     wallet: []
   }
 
-  const { bengkelId } = req.params
-  let apiKey: string = '776b8c15b1ab864e1b96bb61d6bb56d0'
-
+  const espayMerchantConfig: Array<IMerchantConfigurationsFindAllOutput> = await MerchantConfigurationsRepository.findEspayConfigByBengkelId(paramsMerchantConfig);
   const paymentList: Array<IPaymentMethodFindAllOutput> = await PaymentMethodRepository.findAllPaymentList();
-  const espayPaymentList: IMerchantInfoEspayResourceModel | null = await EspayServices.findMerchantInfo(apiKey);
+  const espayPaymentList: IMerchantInfoEspayResourceModel | null = await EspayServices.findMerchantInfo(espayMerchantConfig[0].espay_merchant_api_key);
   
   if (!espayPaymentList || espayPaymentList.error_code != '0000') {
     res.status(500).json(BaseResource.exec({
       data: null,
       isSuccess: false,
-      message: espayPaymentList ? `Error - ${espayPaymentList.error_message}` : 'Error - Failed Connected to Espay Service',
+      message: espayPaymentList ? `Error - ${espayPaymentList.error_message}` : 'Error - Failed Connected to Espay Service Merchant Info',
       status: 500,
     }));
   }
