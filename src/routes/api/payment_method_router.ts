@@ -4,7 +4,7 @@ import * as controller from '../../../src/app/http/controllers/payment_method_co
 const router = express.Router()
 
 router.get('/', controller.index)
-router.get('/bengkel/:bengkelId', controller.index)
+router.get('/:bengkelId/payment-methods', controller.index)
 
 export {
     router as paymentMethodRouter
