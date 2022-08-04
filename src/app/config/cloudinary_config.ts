@@ -18,10 +18,20 @@ cloudinary.config({
   secure: true,
 });
 
-const cloudinaryBaseUrl = `https://res.cloudinary.com/adiramoservice/q_auto,f_auto/v1/${cloudinaryConfig.cloudinary_path}`
+// const cloudinaryBaseUrl = `https://res.cloudinary.com/adiramoservice/q_auto,f_auto/v1/${cloudinaryConfig.cloudinary_path}`
+
+const cloudinaryBaseUrl = (setting: string): string => {
+  let settings: Array<any> = ['q_auto','f_auto']
+
+  if (setting) {
+    settings.push(setting)
+  }
+  const basePathUrl: string = `https://res.cloudinary.com/adiramoservice/${settings.toString()}/v1/${cloudinaryConfig.cloudinary_path}`
+  return basePathUrl
+}
 
 export {
   cloudinary,
   cloudinaryConfig,
-  cloudinaryBaseUrl
+  cloudinaryBaseUrl,
 }
