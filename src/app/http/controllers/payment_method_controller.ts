@@ -43,7 +43,7 @@ const index = async (req: Request, res: Response) => {
 
   for (let i in dataPaymentTransform) {
     if (espayPaymentList?.data.find(item => item.bankCode === dataPaymentTransform[i].bank_code)){
-      dataPaymentTransform[i].logo = `${cloudinaryBaseUrl}/${dataPaymentTransform[i].logo}`
+      dataPaymentTransform[i].logo = `${cloudinaryBaseUrl('h_20')}/${dataPaymentTransform[i].logo}`
       if (dataPaymentTransform[i].type == 'va'){
         result.va.push(dataPaymentTransform[i])
       }
